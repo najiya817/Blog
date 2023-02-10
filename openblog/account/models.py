@@ -22,7 +22,7 @@ class Blogs(models.Model):
     image=models.ImageField(upload_to="blog_images")
     date=models.DateField(auto_now_add=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="blog")
-    liked_by=models.ManyToManyField(User,related_name="likes")
+    liked_by=models.ManyToManyField(User,related_name="likes",null=True)
 
 
 class Comments(models.Model):
