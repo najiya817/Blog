@@ -20,5 +20,6 @@ from account.views import HomeView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accnt/',include('account.urls')),
-    path('',HomeView.as_view(),name='h')
+    path('usr/',include('user.urls')),
+    path('',HomeView.as_view(),name='h'),
 ]
