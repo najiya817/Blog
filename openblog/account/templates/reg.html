@@ -17,9 +17,10 @@
 {%endfor%}
 {%endif%}
 
+
 <form action="" method="post">
   {% csrf_token %}
-  <table class="table">
+  <table class="table table-active">
   {{form.as_table}}
   <td colspan="2" class="text-center">
     <button class="btn btn-success ">Register</button>

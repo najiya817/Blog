@@ -4,6 +4,6 @@ from .views import *
 
 urlpatterns = [
         path('reg/',RegView.as_view(),name="reg"),
-        path('log/',RegView.as_view(),name="log"),
+        path('log/',LogView.as_view(),name="log"),
         
 ]
