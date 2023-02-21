@@ -3,7 +3,7 @@ from django.views.generic import View,CreateView,FormView,TemplateView
 from .forms import RegForm,LogForm
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 
 
@@ -27,9 +27,13 @@ class LogView(FormView):
             pw=form_data.cleaned_data.get("password")
             user=authenticate(request,username=un,password=pw)
             if user:
+                login(request,user)
                 return redirect("uhome")
             else:
                 return redirect("log")
         else:
             return render(request,"log.html",{"form":form_data})
+        
+class LogOutView(View):
+    pass
 

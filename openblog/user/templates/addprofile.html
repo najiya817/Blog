@@ -1,0 +1,31 @@
+{% extends 'navbar.html' %} 
+{% block nav %}
+{% load static %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">    
+{% if messages %}
+{% for i in messages %}
+    {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <DIV class="alert alert-success alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{i}}
+    </DIV>
+    {%endif%}
+    {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <DIV class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{i}}
+    </DIV>
+    {%endif%}
+{%endfor%}
+{%endif%}
+
+<h1>Add Profile</h1>
+<table>
+<form action="" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{form.as_table}}
+<button class="btn btn-success">ADD</button>
+</form>
+</table>
+
+{% endblock nav %}

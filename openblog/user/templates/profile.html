@@ -1,0 +1,15 @@
+{% extends 'navbar.html' %}
+{% block nav %}
+{% load static %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">    
+
+
+
+<h2 class="bg-primary">profile</h1>
+    <div class="row">
+   <div class="col"></div>
+   <div class="col-4" style="border-left:2px solid black;height: 650px;">
+    <a href="{% url 'addpro' %}" class="btn btn-warning">Add Profile</a>
+</div>
+   </div>
+{% endblock nav %}
