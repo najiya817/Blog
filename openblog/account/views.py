@@ -35,5 +35,7 @@ class LogView(FormView):
             return render(request,"log.html",{"form":form_data})
         
 class LogOutView(View):
-    pass
+    def get(self,request):
+        logout(request)
+        return redirect("log")
 

@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import View,TemplateView,CreateView
 from .forms import *
 from account .models import UserProfile
+from .forms import ProfileForm
 from django.contrib import messages
 # Create your views here.
 class UserHome(TemplateView):
@@ -12,7 +13,7 @@ class ProfileView(TemplateView):
 
 class AddProfile(CreateView):
     template_name="addprofile.html"
-    form_class=ProfieForm
+    form_class=ProfileForm
     model=UserProfile
     success_url=reverse_lazy("pro")
     def form_valid(self,form):
@@ -21,11 +22,11 @@ class AddProfile(CreateView):
         messages.success(self.request,"profile added")
         return super().form_valid(form)
 # def post(self,req,*args,**kwargs):
-    #     form_data=self.form_class(data=req.POST,files=req.FILES)
-    #     if form_data.is_valid():
-    #         form_data.instance.user=req.user
-    #         form_data.save()
-    #         return redirect("pro")
-    #     else:
-    #         return render(req,"addprofile.html",{"form":form_data})        
+#         form_data=self.form_class(data=req.POST,files=req.FILES)
+#         if form_data.is_valid():
+#             form_data.instance.user=req.user
+#             form_data.save()
+#             return redirect("pro")
+#         else:
+#             return render(req,"addprofile.html",{"form":form_data})        
   
