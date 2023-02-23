@@ -24,7 +24,7 @@
   </div>
    <div class="col-4" style="border-left:2px solid black;height: 650px;">
     {% if request.user.p_user %}
-    <a href="" class="btn btn-info">change password</a>
+    <a href="{% url 'cpassd' %}" class="btn btn-info">change password</a>
     {% else %}
     <a href="{% url 'addpro' %}" class="btn btn-warning">Add Profile</a>
     {% endif %}
