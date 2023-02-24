@@ -57,3 +57,22 @@ class CPassView(FormView):
             else:
                 messages.error(request,"old password enterd is incorrect")
                 return redirect("cpass")
+            
+class EditPro(View):
+    def get(self,request,*args,**kwargs):
+        pid=kwargs.get("pid")
+        p=UserProfile.objects.get(id=pid)
+        f=ProfileForm(instance=p)
+        return render(request,"editpro.html",{"form":f})
+    def post(self,request,*args,**kwargs):
+        pid=kwargs.get("pid")
+        p=UserProfile.objects.get(id=pid)
+        form_data=ProfileForm(data=request.POST,files=request.FILES,instance=p)
+        if form_data.is_valid():
+            form_data.save()
+            messages.success(request,"profile updated")
+            return redirect("pro")
+        else:
+           return render(request,"editpro.html",{"form":form_data})
+    
+    

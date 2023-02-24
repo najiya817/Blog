@@ -1,0 +1,15 @@
+{% extends 'navbar.html' %} 
+{% block nav %}
+{% load static %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">    
+<h3>EDIT PROFILE</h3>
+<form action="" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <table class="table">
+        {{form.as_table}}
+        <tr><td colspan="2"><button class="btn btn-success">update</button>
+
+        </td></tr>
+    </table>
+</form>
+{% endblock nav %}
