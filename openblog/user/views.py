@@ -1,17 +1,32 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
-from django.views.generic import View,TemplateView,CreateView,FormView
+from django.views.generic import View,TemplateView,CreateView,FormView,UpdateView
 from .forms import *
-from account .models import UserProfile
-from .forms import ProfileForm
+from account .models import UserProfile,Blogs
+from .forms import ProfileForm,BlogForm
 from django.contrib import messages
 from  django.contrib.auth import authenticate,login,logout
 
 
 
 # Create your views here.
-class UserHome(TemplateView):
+class UserHome(CreateView):
+    form_class=BlogForm
+    model=Blogs
     template_name="userhome.html"
+    success_url=reverse_lazy("uhome")
+    def form_valid(self, form):
+        form.instance.user=self.request.user
+        messages.success(self.request,"posted ")
+        self.object=form.save()
+        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context["data"]=Blogs.objects.all()       
+        return super().get_context_data(**kwargs)
+
+
+
 class ProfileView(TemplateView):
     template_name="profile.html"  
 
@@ -58,21 +73,30 @@ class CPassView(FormView):
                 messages.error(request,"old password enterd is incorrect")
                 return redirect("cpass")
             
-class EditPro(View):
-    def get(self,request,*args,**kwargs):
-        pid=kwargs.get("pid")
-        p=UserProfile.objects.get(id=pid)
-        f=ProfileForm(instance=p)
-        return render(request,"editpro.html",{"form":f})
-    def post(self,request,*args,**kwargs):
-        pid=kwargs.get("pid")
-        p=UserProfile.objects.get(id=pid)
-        form_data=ProfileForm(data=request.POST,files=request.FILES,instance=p)
-        if form_data.is_valid():
-            form_data.save()
-            messages.success(request,"profile updated")
-            return redirect("pro")
-        else:
-           return render(request,"editpro.html",{"form":form_data})
+class EditPro(UpdateView):
+    form_class=ProfileForm
+    model=UserProfile
+    success_url=reverse_lazy("pro")
+    template_name="editpro.html"
+    pk_url_kwarg="pk"
+    def form_valid(self, form):
+        messages.success(self.request,"profile updated")
+        self.object=form.save()
+        return super().form_valid(form)
+    # def get(self,request,*args,**kwargs):
+    #     pid=kwargs.get("pid")
+    #     p=UserProfile.objects.get(id=pid)
+    #     f=ProfileForm(instance=p)
+    #     return render(request,"editpro.html",{"form":f})
+    # def post(self,request,*args,**kwargs):
+    #     pid=kwargs.get("pid")
+    #     p=UserProfile.objects.get(id=pid)
+    #     form_data=ProfileForm(data=request.POST,files=request.FILES,instance=p)
+    #     if form_data.is_valid():
+    #         form_data.save()
+    #         messages.success(request,"profile updated")
+    #         return redirect("pro")
+    #     else:
+    #        return render(request,"editpro.html",{"form":form_data})
     
     

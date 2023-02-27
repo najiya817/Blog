@@ -15,7 +15,12 @@ class RegView(CreateView):
     template_name="reg.html"
     form_class=RegForm
     model=User
-    success_url=reverse_lazy('h')    
+    success_url=reverse_lazy('h')  
+    def form_valid(self, form):
+        messages.success(self.request,"profile updated")
+        self.object=form.save()
+        return super().form_valid(form)
+  
         
 class LogView(FormView):
     form_class=LogForm
