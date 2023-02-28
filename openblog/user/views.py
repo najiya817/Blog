@@ -23,7 +23,7 @@ class UserHome(CreateView):
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         context["data"]=Blogs.objects.all()       
-        return super().get_context_data(**kwargs)
+        return context
 
 
 
