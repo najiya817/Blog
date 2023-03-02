@@ -7,6 +7,8 @@ urlpatterns=[
     path('addprofile/',AddProfile.as_view(),name="addpro"),
     path('cpass/',CPassView.as_view(),name="cpassd"),
     path('ep/<int:pk>',EditPro.as_view(),name="ep"),
-    
+    path('myb/',MyBlogView.as_view(),name="myb"),
+    path('delblg/<int:id>',DeleteBlog.as_view(),name="delblg"),
+
 
 ]

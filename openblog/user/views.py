@@ -99,4 +99,35 @@ class EditPro(UpdateView):
     #     else:
     #        return render(request,"editpro.html",{"form":form_data})
     
-    
+class MyBlogView(TemplateView):
+    template_name="mypost.html"
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        context["data"]=Blogs.objects.filter(user=self.request.user).order_by('-date')
+        return context
+
+class DeleteBlog(View):
+    def get(self,request,*args,**kwargs):
+        sid=kwargs.get("id")
+        blg=Blogs.objects.get(id=sid)
+        blg.delete()
+        return redirect("myb")
+
+class EditBlog(View):
+    def get(self,request,*args,**kwargs):
+        id=kwargs.get("id")
+        blg=Blogs.objects.get(id=id)
+        f=Blogs(instance=blg)
+        return render(request,"mypost.html",{"form":f})
+    def post(self,request,*args,**kwargs):
+        id=kwargs.get("id")
+        blg=Blogs.objects.get(id=id)
+        form_data=Blogs(data=request.POST,instance=blg,files=request.FILES)
+        if form_data.is_valid():
+            form_data.save()
+            messages.success(request,"Blog updated succesfully")
+            return redirect("myb") 
+        else:
+           messages.error(request,"updation failed")
+           return render(request,"editblog.html",{"form":form_data}) 
+                 
