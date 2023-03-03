@@ -8,7 +8,8 @@ urlpatterns=[
     path('cpass/',CPassView.as_view(),name="cpassd"),
     path('ep/<int:pk>',EditPro.as_view(),name="ep"),
     path('myb/',MyBlogView.as_view(),name="myb"),
-    path('delblg/<int:id>',DeleteBlog.as_view(),name="delblg"),
+    path('delblg/<int:pk>',DeleteBlog.as_view(),name="delblg"),
+    path('edtblg/<int:pk>',EditBlog.as_view(),name="edtblg"),
 
 
 ]
