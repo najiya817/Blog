@@ -1,5 +1,5 @@
 from django import forms
-from account.models import UserProfile,Blogs
+from account.models import UserProfile,Blogs,Comments
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -21,4 +21,12 @@ class BlogForm(forms.ModelForm):
             "description":forms.Textarea(attrs={"class":"form-control","placeholder":"Description...."}),
             "image":forms.FileInput(),
             
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model=Comments
+        fields=["comment"]
+        widgets={
+            "comment":forms.Textarea(attrs={"class":"form-control"})
         }
