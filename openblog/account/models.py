@@ -23,6 +23,10 @@ class Blogs(models.Model):
     date=models.DateField(auto_now_add=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="blog")
     liked_by=models.ManyToManyField(User,related_name="likes",null=True)
+    @property
+    def alllikes(self):
+        return self.liked_by.all()
+    
 
 
 class Comments(models.Model):

@@ -23,12 +23,28 @@ class UserHome(CreateView):
         return super().form_valid(form)
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
-        context["data"]=Blogs.objects.all() 
-        context["cform"]=CommentForm()      
+        context["data"]=Blogs.objects.all().order_by("-date") 
+        context["cform"]=CommentForm() 
+        context["comments"]=Comments.objects.all()
+        print(context["data"])
         return context
     
-def commentadd(request):
-    return HttpResponse("commented")
+def commentadd(request,*args,**kwargs):
+    if request.method=="POST":
+        bid=kwargs.get("bid")
+        blog=Blogs.objects.get(id=bid)
+        cmnt=request.POST.get("comment")
+        user=request.user
+        Comments.objects.create(comment=cmnt,user=user,blog=blog)
+        messages.success(request,"comment submitted")
+        return redirect("uhome")
+    
+def addlike(request,*args,**kwargs):
+    bid=kwargs.get("bid")
+    blog=Blogs.objects.get(id=bid)
+    blog.liked_by.add(request.user)
+    blog.save()
+    return redirect("uhome")
 
 
 

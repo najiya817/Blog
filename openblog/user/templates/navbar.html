@@ -14,14 +14,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
-<style>
-nav{position:sticky;
-
-}
-</style>  
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
         {% if request.user.p_user %}
         <a href="{%url 'uhome'%}"><img src="{{request.user.p_user.profile_pic.url}}" height="50px" width="50px" class="rounded-circle" alt=""></a>

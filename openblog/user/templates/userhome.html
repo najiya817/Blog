@@ -48,10 +48,11 @@
     </div>
     </div>
     <div class="card-footer">
-      <button class="btn btn-info"><span class="material-symbols-outlined">
+      <a class="btn btn-info" href="{%url 'like' i.id%}">
+      <span class="material-symbols-outlined">
         favorite
-        </span></button>
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#cmnt" aria-expanded="false" aria-controls="cmnt">
+        </span>liked by {{i.alllikes.count}}</a>
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#c{{i.id}}" aria-expanded="false" aria-controls="cmnt">
         <span class="material-symbols-outlined">
           chat_bubble
           </span>
@@ -60,9 +61,9 @@
         notifications
         </span></button>
         <button class="btn btn-success float-right">follow</button>
-      <div class="collapse" id="cmnt">
+      <div class="collapse" id="c{{i.id}}">
         <div class="card card-body">
-        <form action="{% url 'cmnt' %}">
+        <form action="{% url 'cmnt' i.id %}" method="post">
           {%csrf_token%}
           {{cform.as_p}}
           <div><button class="btn btn-success btn-sm text-center ">comment</button>
@@ -74,20 +75,22 @@
     </div>
   </div>
   {%endfor%}
-    <div>
+<div>
       <!-- <h3 class="text-secondary">comments</h3> -->
-      {% for c in comments %}
-      {%if c.blog.id == i.id%}
+{% for c in comments %}
+    {%if c.blog.id == i.id%}
       <div class="card">
         <div class="card-body">
           <p class="card-title">{{c.comment}}</p>
           <p class="card-text">{{c.date}}</p>
           <p class="card-text text-right">{{c.user.first_name}} {{c.user.last_name}}</p>
         </div>
-      </div></div>
+      </div>
+    
     {%endif%}
-    {%endfor%}
-  </div></div>
+{%endfor%}
+  </div>
+</div>
   <!-- <div class="col"></div> -->
   <div class="col-4">
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">

@@ -10,7 +10,8 @@ urlpatterns=[
     path('myb/',MyBlogView.as_view(),name="myb"),
     path('delblg/<int:pk>',DeleteBlog.as_view(),name="delblg"),
     path('edtblg/<int:pk>',EditBlog.as_view(),name="edtblg"),
-    path('cadd/',commentadd,name="cmnt"),
+    path('cadd/<int:bid>',commentadd,name="cmnt"),
+    path('like/<int:bid>',addlike,name="like"),
 
 
 ]
