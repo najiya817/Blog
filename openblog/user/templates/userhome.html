@@ -1,6 +1,6 @@
 {% extends 'navbar.html' %}
 {% block nav %}
- {% load static %} 
+{% load static %} 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">    
 <h1 class="text-center text-light">USERHOME</h1>
 {% if messages %}
@@ -20,76 +20,86 @@
 {%endfor%}
 {%endif%}
 
+
 <div class="row">
+  
   <div class="col-4"></div>
-  <div class="col-4">
-    {% for i in data %}
-    <div class="card mt-3 bg-light" style="width: 100%;">
-      <div class="card-header">
-        {%if i.user == request.user%}
-        <h6>
-          <span class="material-symbols-outlined">
-            account_circle
-            </span>ME</h6>
-        {%else%}
-        <h4><span class="material-symbols-outlined">
-          account_circle
-          </span>{{i.user.first_name}} {{i.user.last_name}}</h4>
-        {%endif%}
-      
-      <span>{{i.date}}</span></div>
-      {% if i.image.url %}
-      <img class="card-img-top" src="{{i.image.url}}" alt="Card image cap">
-      {%endif%}
-      <div class="card-body">
-        <h5 class="card-title">{{i.title}}</h5>
-
-        <p class="card-text">{{i.description}}</p>
-    </div>
-    </div>
-    <div class="card-footer">
-      <a class="btn btn-info" href="{%url 'like' i.id%}">
-      <span class="material-symbols-outlined">
-        favorite
-        </span>liked by {{i.alllikes.count}}</a>
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#c{{i.id}}" aria-expanded="false" aria-controls="cmnt">
-        <span class="material-symbols-outlined">
-          chat_bubble
-          </span>
-      </button>
-      <button class="btn btn-active float-right"><span class="material-symbols-outlined text-right">
-        notifications
-        </span></button>
-        <button class="btn btn-success float-right">follow</button>
-      <div class="collapse" id="c{{i.id}}">
-        <div class="card card-body">
-        <form action="{% url 'cmnt' i.id %}" method="post">
-          {%csrf_token%}
-          {{cform.as_p}}
-          <div><button class="btn btn-success btn-sm text-center ">comment</button>
-
-          </div>
-        </form>
-      </div>
-     
-    </div>
-  </div>
-  {%endfor%}
-<div>
-      <!-- <h3 class="text-secondary">comments</h3> -->
-{% for c in comments %}
-    {%if c.blog.id == i.id%}
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title">{{c.comment}}</p>
-          <p class="card-text">{{c.date}}</p>
-          <p class="card-text text-right">{{c.user.first_name}} {{c.user.last_name}}</p>
-        </div>
-      </div>
     
-    {%endif%}
+    <div class="col-4">
+          {% for i in data %}
+              <div class="card mt-3 bg-light" style="width: 100%;">
+                  <div class="card-header">
+                      {%if i.user == request.user%}
+                      <h6>
+                      <span class="material-symbols-outlined">
+                      account_circle
+                      </span>ME
+                      </h6>
+                      {%else%}
+                      <h4>
+                      <span class="material-symbols-outlined">
+                      account_circle
+                      </span>{{i.user.first_name}} {{i.user.last_name}}
+                      </h4>
+                      {%endif%}
+                      <span>{{i.date}}</span>
+                  </div>
+                  {% if i.image.url %}
+                      <img class="card-img-top" src="{{i.image.url}}" alt="Card image cap">
+                  {%endif%}
+                      <div class="card-body">
+                          <h5 class="card-title">{{i.title}}</h5>
+                          <p class="card-text">{{i.description}}</p>
+                      </div>
+              </div>
+          <div class="card-footer">
+              <a class="btn btn-info" href="{%url 'like' i.id%}">
+              <span class="material-symbols-outlined">
+              favorite
+              </span>liked by {{i.alllikes.count}}</a>
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#c{{i.id}}" aria-expanded="false" aria-controls="cmnt">
+              <span class="material-symbols-outlined">
+              chat_bubble
+              </span>
+              </button>
+              <button class="btn btn-active float-right"><span class="material-symbols-outlined text-right">
+              notifications
+              </span></button>
+              <button class="btn btn-success float-right">follow</button>
+              <div class="collapse" id="c{{i.id}}">
+                  <div class="card card-body">
+                      <form action="{% url 'cmnt' i.id %}" method="post">
+                          {%csrf_token%}
+                          {{cform.as_p}}
+                          <div><button class="btn btn-success btn-sm text-center ">comment</button>
+                          
+                                      <div>
+              <h3 class="text-secondary">comments</h3>
+              {% for c in comments %}
+              {% if c.blog.id == i.id %}
+              <div class="card">
+                  <div class="card-body">
+                      <p class="card-title">{{c.comment}}</p>
+                      <p class="card-text">{{c.date}}</p>
+                      <p class="card-text font-weight-bold text-right">{{c.user.first_name}} {{c.user.last_name}}</p>
+                  </div>
+              </div>
+          
+              {%endif%}
+              {%endfor%}
+          </div>
+
+                          
+                          </div>
+                      </form>
+                  </div>
+     
+              </div>
+          
+    
+    </div>
+
 {%endfor%}
-  </div>
 </div>
   <!-- <div class="col"></div> -->
   <div class="col-4">

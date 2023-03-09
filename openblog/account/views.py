@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -17,7 +18,13 @@ class RegView(CreateView):
     model=User
     success_url=reverse_lazy('h')  
     def form_valid(self, form):
-        messages.success(self.request,"profile updated")
+        send_mail(
+            "welcome to openblog",
+            "you are successfully registered to openblog",
+            "najiyanaji817@gmail.com",
+            [form.cleaned_data.get("email")]
+        )
+        messages.success(self.request,"registration successfull")
         self.object=form.save()
         return super().form_valid(form)
   
